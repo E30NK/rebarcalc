@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>محاسبه‌گر مصالح ساختمان</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="app-header__badge">ابزار برآورد ساختمان</div>
+        <h1>محاسبه‌گر مصالح و هزینه</h1>
+        <p class="app-header__desc">
+          متراژ را وارد کنید؛ مصالح مورد نیاز و برآورد هزینه به‌صورت خودکار
+          محاسبه می‌شود.
+        </p>
+      </header>
+
+      <main class="app-main">
+        <section class="card card-inputs">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">📐</span>
+            <div>
+              <h2>ورود اطلاعات</h2>
+              <p>متراژ و تعداد طبقات پروژه را مشخص کنید</p>
+            </div>
+          </div>
+
+          <div class="input-grid">
+            <div class="input-field">
+              <label for="field1">متراژ زیر بنا</label>
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  id="field1"
+                  inputmode="numeric"
+                  placeholder="۰"
+                  autocomplete="off"
+                />
+                <span class="input-suffix">m²</span>
+              </div>
+            </div>
+
+            <div class="input-field">
+              <label for="field2">متراژ سقف</label>
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  id="field2"
+                  inputmode="numeric"
+                  placeholder="۰"
+                  autocomplete="off"
+                />
+                <span class="input-suffix">m²</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="floor-options">
+            <span class="options-label">تعداد طبقات</span>
+            <div class="chip-group">
+              <label class="chip">
+                <input type="checkbox" name="floorRange" value="35" />
+                <span>۱ تا ۲ طبقه</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="floorRange" value="50" />
+                <span>۳ تا ۵ طبقه</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="floorRange" value="60" />
+                <span>۵ تا ۱۰ طبقه</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card card-results">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">📦</span>
+            <div>
+              <h2>مواد مورد نیاز</h2>
+              <p>بر اساس متراژ وارد‌شده</p>
+            </div>
+          </div>
+
+          <div id="calculationResults" class="results-grid">
+            <article class="result-item result-item--concrete">
+              <div class="result-item__head">
+                <span class="result-item__icon">🧱</span>
+                <span class="result-item__title">بتن</span>
+              </div>
+              <div class="result-item__value">
+                <span id="concrete">۰</span>
+                <small>متر مکعب</small>
+              </div>
+            </article>
+
+            <article class="result-item result-item--rebar calc-item-rebar">
+              <div class="result-item__head">
+                <span class="result-item__icon">🔩</span>
+                <span class="result-item__title">میلگرد</span>
+              </div>
+              <div class="rebar-main result-item__value">
+                <span id="rebar">۰</span>
+                <small>کیلوگرم</small>
+              </div>
+              <div id="rebarBreakdown" class="rebar-breakdown"></div>
+            </article>
+
+            <article class="result-item result-item--yonolith">
+              <div class="result-item__head">
+                <span class="result-item__icon">📋</span>
+                <span class="result-item__title">یونولیت</span>
+              </div>
+              <div class="result-item__value">
+                <span id="yonolith">—</span>
+                <small id="yonolithUnit"></small>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card card-cost cost-section">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">💰</span>
+            <div>
+              <h2>محاسبه هزینه</h2>
+              <p>قیمت واحد هر مصالح را وارد کنید</p>
+            </div>
+          </div>
+
+          <div class="cost-layout">
+            <div class="cost-inputs">
+              <div class="price-field">
+                <label for="concretePrice">قیمت بتن</label>
+                <span class="price-hint">هر متر مکعب</span>
+                <div class="price-input-wrap input-wrap">
+                  <input
+                    type="text"
+                    id="concretePrice"
+                    inputmode="numeric"
+                    placeholder="۰"
+                    autocomplete="off"
+                  />
+                  <span class="input-suffix">تومان</span>
+                </div>
+              </div>
+
+              <div class="price-field price-field--rebar">
+                <label for="rebarPrice">قیمت میلگرد</label>
+                <span class="price-hint">هر شاخه ۱۲ متری</span>
+                <div class="price-input-wrap input-wrap">
+                  <input
+                    type="text"
+                    id="rebarPrice"
+                    inputmode="numeric"
+                    placeholder="۰"
+                    autocomplete="off"
+                  />
+                  <span class="input-suffix">تومان</span>
+                </div>
+                <div class="rebar-price-sizes">
+                  <span class="options-label">انتخاب سایز</span>
+                  <div class="chip-group chip-group--compact">
+                    <label class="chip chip--sm size-check">
+                      <input type="checkbox" name="rebarSizePrice" value="12" />
+                      <span>۱۲</span>
+                    </label>
+                    <label class="chip chip--sm size-check">
+                      <input type="checkbox" name="rebarSizePrice" value="14" />
+                      <span>۱۴</span>
+                    </label>
+                    <label class="chip chip--sm size-check">
+                      <input type="checkbox" name="rebarSizePrice" value="16" />
+                      <span>۱۶</span>
+                    </label>
+                    <label class="chip chip--sm size-check">
+                      <input type="checkbox" name="rebarSizePrice" value="18" />
+                      <span>۱۸</span>
+                    </label>
+                    <label class="chip chip--sm size-check">
+                      <input type="checkbox" name="rebarSizePrice" value="20" />
+                      <span>۲۰</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price-field">
+                <label for="yonolithPrice">قیمت یونولیت</label>
+                <span class="price-hint">هر عدد</span>
+                <div class="price-input-wrap input-wrap">
+                  <input
+                    type="text"
+                    id="yonolithPrice"
+                    inputmode="numeric"
+                    placeholder="۰"
+                    autocomplete="off"
+                  />
+                  <span class="input-suffix">تومان</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cost-results">
+              <h3 class="cost-results__title">خلاصه هزینه‌ها</h3>
+
+              <div class="cost-row">
+                <span class="cost-label">هزینه بتن</span>
+                <span class="cost-value" id="costConcrete">—</span>
+              </div>
+              <div class="cost-row cost-row-rebar">
+                <span class="cost-label">هزینه میلگرد</span>
+                <span class="cost-value" id="costRebar">—</span>
+              </div>
+              <div id="costRebarDetails" class="cost-rebar-details"></div>
+              <div class="cost-row">
+                <span class="cost-label">هزینه یونولیت</span>
+                <span class="cost-value" id="costYonolith">—</span>
+              </div>
+
+              <div class="cost-summary">
+                <div class="cost-row cost-row-total">
+                  <span class="cost-label">مبلغ کل</span>
+                  <span class="cost-value" id="costTotal">—</span>
+                </div>
+                <div class="cost-row cost-row-per-meter">
+                  <span class="cost-label">قیمت تمام‌شده هر متر</span>
+                  <span class="cost-value" id="costPerMeter">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>محاسبات تقریبی هستند — برای پروژه واقعی با مهندس مشورت کنید.</p>
+      </footer>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
